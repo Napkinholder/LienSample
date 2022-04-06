@@ -8,8 +8,9 @@ public class DetailsModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly ILienStorageContext _context;
-    private Lien? lien;
-    public Lien? Lien { get => lien; }
+
+    [BindProperty]
+    public Lien? Lien { get; set; }
 
     public DetailsModel(ILogger<IndexModel> logger, ILienStorageContext context)
     {
@@ -19,10 +20,17 @@ public class DetailsModel : PageModel
 
     public IActionResult OnGet(int id)
     {
-        lien = _context.Get(id);
-        if (lien == null) {
+        Lien = _context.Get(id);
+        if (Lien == null)
+        {
             return NotFound();
         }
         return Page();
+    }
+
+    public IActionResult OnPost()
+    {
+        _context.Save(Lien);
+        return RedirectToPage("./Index");
     }
 }
