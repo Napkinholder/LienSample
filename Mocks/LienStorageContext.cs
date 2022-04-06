@@ -14,27 +14,32 @@ namespace LienSample.Mocks
                 new Lien {
                     Company = "American Automotive",
                     CreatedDate = new DateTime(2022,1,21),
-                    Amount = 7500
+                    Amount = 7500,
+                    LienType = "V"
                 },
                 new Lien {
                     Company = "Epic Electric",
                     CreatedDate = new DateTime(2022,1,22),
-                    Amount = 11200
+                    Amount = 11200,
+                    LienType = "V"
                 },
                 new Lien {
                     Company = "Bottomline Bank",
                     CreatedDate = new DateTime(2022,1,22),
-                    Amount = 500
+                    Amount = 500,
+                    LienType = "J"
                 },
                 new Lien {
                     Company = "Cosmic Computers",
                     CreatedDate = new DateTime(2022,1,22),
-                    Amount = 37500
+                    Amount = 37500,
+                    LienType = "S"
                 },
                 new Lien {
                     Company = "Leading Laboratories",
                     CreatedDate = new DateTime(2022,1,22),
-                    Amount = 5500
+                    Amount = 5500,
+                    LienType = "V"
                 }
             };
 

@@ -1,26 +1,29 @@
 using LienSample.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LienSample.Pages;
 
 public class DetailsModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
-    private readonly ILienStorageContext _context;
+    private readonly ILienStorageContext _lienContext;
 
     [BindProperty]
     public Lien? Lien { get; set; }
+    public SelectList LienTypes { get; set; }
 
-    public DetailsModel(ILogger<IndexModel> logger, ILienStorageContext context)
+    public DetailsModel(ILogger<IndexModel> logger, ILienStorageContext lienContext, ILienTypeStorageContext lienTypeContext)
     {
         _logger = logger;
-        _context = context;
+        _lienContext = lienContext;
+        LienTypes =  new SelectList(lienTypeContext.GetAll().Values, nameof(LienType.Id), nameof(LienType.Name));
     }
 
     public IActionResult OnGet(int id)
     {
-        Lien = _context.Get(id);
+        Lien = _lienContext.Get(id);
         if (Lien == null)
         {
             return NotFound();
@@ -30,7 +33,13 @@ public class DetailsModel : PageModel
 
     public IActionResult OnPost()
     {
-        _context.Save(Lien);
-        return RedirectToPage("./Index");
+        if (Lien != null)
+        {
+            _lienContext.Save(Lien);
+            return RedirectToPage("./Index");
+        }
+        else {
+            return NotFound();
+        }
     }
 }

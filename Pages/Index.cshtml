@@ -2,42 +2,53 @@
 @using Models
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+  ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Lien Sample</h1>
-<table class="table">
-    <thead>
+  <h1 class="display-4">Lien Sample</h1>
+  @if (Model.Liens != null)
+  {
+    <table class="table">
+      <thead>
         <tr>
-            <th>
-                @Html.DisplayNameForInnerType((Lien model) => model.Company)
-            </th>
-            <th>
-                @Html.DisplayNameForInnerType((Lien model) => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameForInnerType((Lien model) => model.Amount)
-            </th>
-            <th></th>
+          <th>
+            @Html.DisplayNameForInnerType((Lien model) => model.Company)
+          </th>
+          <th>
+            @Html.DisplayNameForInnerType((Lien model) => model.CreatedDate)
+          </th>
+          <th>
+            @Html.DisplayNameForInnerType((Lien model) => model.Amount)
+          </th>
+          <th>
+            @Html.DisplayNameForInnerType((LienType model) => model.Name)
+          </th>
+          <th></th>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Liens) {
-        <tr>
+      </thead>
+      <tbody>
+        @foreach (var item in Model.Liens)
+        {
+          <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Company)
+              @Html.DisplayFor(modelItem => item.Company)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
+              @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td style="text-align: right">
-                @Html.DisplayFor(modelItem => item.Amount)
+              @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+              @(Model.LienTypes.ContainsKey(item.LienType) ? Model.LienTypes[item.LienType].Name : "")
             </td>
-        </tr>
-}
-    </tbody>
-</table></div>
+            <td>
+              <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

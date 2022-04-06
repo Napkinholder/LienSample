@@ -11,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddLocalization();
 
 builder.Services.AddSingleton<ILienStorageContext>(provider => new LienStorageContext());
+builder.Services.AddSingleton<ILienTypeStorageContext>(provider => new LienTypeStorageContext());
 
 var app = builder.Build();
 

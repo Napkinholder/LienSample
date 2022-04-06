@@ -7,20 +7,22 @@ namespace LienSample.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
-    private readonly ILienStorageContext _context;
-    private IEnumerable<Lien>? liens;
-    public IEnumerable<Lien>? Liens { get => liens; }
+    private readonly ILienStorageContext _lienContext;
+    private readonly ILienTypeStorageContext _lienTypeContext;
+    public IEnumerable<Lien> Liens { get; set; } = new Lien[0];
+    public IDictionary<string,LienType> LienTypes { get; set; } = new Dictionary<string,LienType>();
 
-    public IndexModel(ILogger<IndexModel> logger, ILienStorageContext context)
+    public IndexModel(ILogger<IndexModel> logger, ILienStorageContext lienContext, ILienTypeStorageContext lienTypeContext)
     {
         _logger = logger;
-        _context = context;
-        liens = new Lien[0];
+        _lienContext = lienContext;
+        _lienTypeContext = lienTypeContext;
     }
 
 
     public void OnGet()
     {
-        liens = _context.Search();
+        Liens = _lienContext.Search();
+        LienTypes = _lienTypeContext.GetAll();
     }
 }

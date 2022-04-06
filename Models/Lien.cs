@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LienSample.Models
 {
@@ -12,7 +11,9 @@ namespace LienSample.Models
         [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
         
-         [DataType(DataType.Currency)]
+        [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
+
+        public string LienType { get; set; } = string.Empty;
     }
 }
